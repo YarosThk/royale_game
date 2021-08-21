@@ -1,25 +1,51 @@
-import logo from './logo.svg';
 import './App.css';
+import React from "react"
+import Counter from "./counter"
+import Chamaleon from "./Chamaleon"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+export default class App extends React.Component{
+  constructor(props){
+    super(props)
+
+    this.state ={
+      mount: true,
+      ignoreProp : 0
+    }
+
+    this.mountCounter = this.mountCounter.bind(this)
+    this.unmountCounter = this.unmountCounter.bind(this)
+    this.ignoreProp = this.ignoreProp.bind(this)
+  }
+
+  mountCounter(){
+    this.setState(
+      { mount: true }
+      )
+  }
+
+  unmountCounter() {
+    this.setState(
+      { mount: false }
+    )
+  }
+
+  ignoreProp(){
+    this.setState(
+      {ignoreProp: Math.random()}
+    )
+  }
+
+  render(){
+    return(
+      <div className="App">
+        <button onClick={this.mountCounter}>Mount</button>
+        <button onClick={this.unmountCounter}>Unmount</button>
+        <button onClick={this.ignoreProp}>Ignore Prop</button>
+        {(this.state.mount ? <Counter ignoreProp= {this.state.ignoreProp}/> : null)}
+        <Chamaleon/>
+      </div>
+    )
+  }
 }
 
-export default App;
